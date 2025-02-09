@@ -14,21 +14,12 @@ public class Main{
             int D = Integer.parseInt(sa[3]);
             int answer = 0;
             int start= 1;
-            while(true){
-                int result = (N-1)*M*start*M + (M-1)*M*k*start;
-                if(result<=D){
-                    answer = result;
-                    start++;
-                }
-                else{
-                    break;
-                }
-            }
+            answer =  2*D/(k*N*M*(M-1)+(N-1)*N*M*M);
             if(answer ==0){
                 ans[t] = -1;
             }
-            else {
-                ans[t] = answer;
+            else{
+                ans[t] = (k*N*M*(M-1)/2*answer+(N-1)*N*M*M/2*answer);
             }
         }
         for(int i=0;i<T;i++){
