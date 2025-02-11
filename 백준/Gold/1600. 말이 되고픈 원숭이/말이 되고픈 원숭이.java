@@ -37,10 +37,6 @@ public class Main {
         }
 
         int min = Integer.MAX_VALUE;
-        int[][] cnt_sum= new int[H][W];
-        for(int i=0;i<H;i++) {
-            Arrays.fill(cnt_sum[i],Integer.MAX_VALUE);
-        }
         Queue<Point> queue = new ArrayDeque<>();
         queue.add(new Point(0,0,K,0));
         while(!queue.isEmpty()) {
@@ -48,27 +44,21 @@ public class Main {
             if(p.x==W-1 && p.y==H-1) {
                 min = Math.min(min,p.count);
             }
-            if(visited[p.y][p.x][p.k]) {
-                continue;
-            }
-            visited[p.y][p.x][p.k] = true;
-
-
             for(int i=0;i<8;i++) {
                 int x_1 = p.x + s_dx[i];
                 int y_1 = p.y + s_dy[i];
                 if(i>=0 && i<4) {
                     int x = p.x + dx[i];
                     int y = p.y + dy[i];
-                    if (x >= 0 && x < W && y >= 0 && y < H) {
-                        if (mokey[y][x] == 0) {
+                    if (x >= 0 && x < W && y >= 0 && y < H && !visited[y][x][p.k] &&  mokey[y][x] == 0) {
+                            visited[y][x][p.k]= true;
                             queue.add(new Point(x, y, p.k, p.count + 1));
-                        }
                     }
                 }
-                if(x_1>=0 && x_1<W && y_1>=0 && y_1<H) {
-                    if(mokey[y_1][x_1]==0 && p.k>0) {
-                        queue.add(new Point(x_1,y_1,p.k-1,p.count+1));
+                if(p.k>0) {
+                    if (x_1 >= 0 && x_1 < W && y_1 >= 0 && y_1 < H && !visited[y_1][x_1][p.k - 1] && mokey[y_1][x_1] == 0) {
+                            visited[y_1][x_1][p.k-1] = true;
+                            queue.add(new Point(x_1, y_1, p.k - 1, p.count + 1));
                     }
                 }
             }
