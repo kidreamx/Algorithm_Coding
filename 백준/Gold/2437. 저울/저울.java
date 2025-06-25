@@ -1,33 +1,24 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
-
-
-    public static void main(String[] args) throws IOException {
+public class Main{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(br.readLine());
-        int[] example = new int[N];
-        int sum =0;
+        int[] arr = new int[N];
         String[] sa = br.readLine().split(" ");
         for(int i=0;i<N;i++){
-            example[i] = Integer.parseInt(sa[i]);
-            sum+= example[i];
+            arr[i] = Integer.parseInt(sa[i]);
         }
-        Arrays.sort(example);
-        int test_num =1;
-        int small = 1;
+        Arrays.sort(arr);
+        int std = 1;
         for(int i=0;i<N;i++){
-            if(example[i]>small){
+            if(arr[i]>std){
                 break;
             }
-            small += example[i];
+            std +=arr[i];
         }
+        System.out.println(std);
 
-        bw.write(small+"");
-        br.close();
-        bw.flush();
-        bw.close();
     }
 }
