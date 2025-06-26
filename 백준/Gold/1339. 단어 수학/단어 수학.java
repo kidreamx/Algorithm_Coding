@@ -1,38 +1,41 @@
-    import java.io.*;
-    import java.util.*;
+import java.util.*;
+import java.io.*;
 
-
-    public class Main {
-
-
-        public static void main(String[] args) throws IOException {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-            int N = Integer.parseInt(br.readLine());
-            int num = 9;
-            int[] alpha = new int[26];
-            String[] sa = new String[N];
-            for(int i=0;i<N;i++){
-                sa[i] = br.readLine();
-                int temp = (int)Math.pow(10,sa[i].length()-1);
-                for(int j=0;j<sa[i].length();j++){
-                    char c = sa[i].charAt(j);
-                    alpha[c-'A'] +=temp;
-                    temp/=10;
-                }
-            }
-            Arrays.sort(alpha);
-            int index = 25;
-            int sum=0;
-            while(alpha[index]!=0){
-                sum += alpha[index] * num;
-                num--;
-                index--;
-            }
-            bw.write(sum+"");
-            bw.flush();
-            bw.close();
-
-        }
-
+public class Main{
+    static int N;
+    static List<char[]> chars;
+    static int[] alpha;
+    static int sum;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        input(br);
+        calculate();
+        System.out.println(sum);
     }
+    static void input(BufferedReader br) throws IOException{
+        N = Integer.parseInt(br.readLine());
+        alpha = new int[26];
+        chars = new ArrayList<>();
+
+        for(int i=0;i<N;i++){
+             chars.add(br.readLine().toCharArray());
+        }
+    }
+    static void calculate(){
+        // 가중치 계산
+        for(int i=0;i<N;i++){
+            for(int j=0;j<chars.get(i).length;j++){
+                alpha[chars.get(i)[j]-'A'] += Math.pow(10,chars.get(i).length-1-j);
+            }
+        }
+        Arrays.sort(alpha);
+        int num = 9;
+        int i = alpha.length-1;
+        sum=0;
+        while(alpha[i]!=0){
+            sum += alpha[i]*num;
+            num--;
+            i--;
+        }
+    }
+}
